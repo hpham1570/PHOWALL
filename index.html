@@ -112,37 +112,37 @@ const { useState, useRef, useCallback } = React;
 
 const AGENTS = [
   // Layer 0 - Apex
-  { id:'cto', name:'CTO / Director', role:'Apex Authority', icon:'⭐', layer:'apex', desc:'Final decision & vision' },
+  { id:'cto', name:'CTO / Giám đốc', role:'Quyền Lực Tối Cao', icon:'⭐', layer:'apex', desc:'Quyết định cuối cùng & tầm nhìn' },
   // Layer 1 - Input
-  { id:'intake', name:'Intake Agent', role:'Validate & Classify', icon:'📥', layer:'input', desc:'Filter & route requests' },
-  { id:'security', name:'Security Agent', role:'Safety Check', icon:'🔒', layer:'input', desc:'Permissions & injection guard' },
+  { id:'intake', name:'Agent Tiếp Nhận', role:'Xác Thực & Phân Loại', icon:'📥', layer:'input', desc:'Lọc & định tuyến yêu cầu' },
+  { id:'security', name:'Agent Bảo Mật', role:'Kiểm Tra An Toàn', icon:'🔒', layer:'input', desc:'Phân quyền & chống injection' },
   // Layer 2 - Management
-  { id:'manager', name:'Manager Agent', role:'Campaign Manager', icon:'🎯', layer:'mgmt', desc:'Tactical operations' },
+  { id:'manager', name:'Agent Quản Lý', role:'Quản Lý Chiến Dịch', icon:'🎯', layer:'mgmt', desc:'Vận hành chiến thuật' },
   // Layer 3 - Oversight
-  { id:'supervisor', name:'Supervisor', role:'Pipeline Oversight', icon:'👁️', layer:'coord', desc:'Monitor all layers' },
+  { id:'supervisor', name:'Giám Sát Viên', role:'Giám Sát Pipeline', icon:'👁️', layer:'coord', desc:'Theo dõi mọi lớp' },
   // Layer 4 - Coordination
-  { id:'planner', name:'Planner', role:'Scheduler', icon:'📅', layer:'coord', desc:'Timeline & capacity' },
-  { id:'lead', name:'Lead Agent', role:'Creative Director', icon:'🎨', layer:'coord', desc:'Coordinate assembly' },
-  { id:'audit', name:'Audit Agent', role:'Independent Audit', icon:'🔍', layer:'coord', desc:'Compliance & anomaly' },
-  { id:'loadbalancer', name:'Load Balancer', role:'Work Distribution', icon:'⚖️', layer:'coord', desc:'Distribute to assembly' },
-  { id:'errorrecovery', name:'Error Recovery', role:'Failure Handler', icon:'🔧', layer:'coord', desc:'Rollback & retry' },
+  { id:'planner', name:'Lập Kế Hoạch', role:'Lên Lịch', icon:'📅', layer:'coord', desc:'Timeline & năng lực' },
+  { id:'lead', name:'Agent Trưởng Nhóm', role:'Giám Đốc Sáng Tạo', icon:'🎨', layer:'coord', desc:'Điều phối đội thực thi' },
+  { id:'audit', name:'Agent Kiểm Toán', role:'Kiểm Toán Độc Lập', icon:'🔍', layer:'coord', desc:'Tuân thủ & phát hiện bất thường' },
+  { id:'loadbalancer', name:'Cân Bằng Tải', role:'Phân Phối Công Việc', icon:'⚖️', layer:'coord', desc:'Phân bổ cho đội thực thi' },
+  { id:'errorrecovery', name:'Khôi Phục Lỗi', role:'Xử Lý Sự Cố', icon:'🔧', layer:'coord', desc:'Rollback & thử lại' },
   // Layer 5 - Execution
-  { id:'researcher', name:'Researcher', role:'Assembly Agent 1', icon:'🔬', layer:'exec', desc:'Market & audience research' },
-  { id:'strategist', name:'Strategist', role:'Assembly Agent 2', icon:'🧠', layer:'exec', desc:'Campaign strategy' },
-  { id:'creator', name:'Content Creator', role:'Assembly Agent 3', icon:'✍️', layer:'exec', desc:'Generate content' },
-  { id:'qc', name:'QC Agent', role:'Brand Compliance', icon:'✅', layer:'exec', desc:'Pass / Fail check' },
+  { id:'researcher', name:'Nhà Nghiên Cứu', role:'Agent Thực Thi 1', icon:'🔬', layer:'exec', desc:'Nghiên cứu thị trường & khách hàng' },
+  { id:'strategist', name:'Chiến Lược Gia', role:'Agent Thực Thi 2', icon:'🧠', layer:'exec', desc:'Chiến lược chiến dịch theo phễu' },
+  { id:'creator', name:'Người Sáng Tạo Nội Dung', role:'Agent Thực Thi 3', icon:'✍️', layer:'exec', desc:'Tạo nội dung' },
+  { id:'qc', name:'Agent QC', role:'Tuân Thủ Thương Hiệu', icon:'✅', layer:'exec', desc:'Kiểm tra Đạt / Không đạt' },
   // Layer 6 - Output
-  { id:'reporter', name:'Reporter', role:'Analytics & KPIs', icon:'📊', layer:'output', desc:'Performance metrics' },
-  { id:'comms', name:'Comms Agent', role:'Notification', icon:'📣', layer:'output', desc:'Deliver final output' },
+  { id:'reporter', name:'Agent Báo Cáo', role:'Phân Tích & KPI', icon:'📊', layer:'output', desc:'Chỉ số hiệu suất theo phễu' },
+  { id:'comms', name:'Agent Truyền Thông', role:'Thông Báo', icon:'📣', layer:'output', desc:'Bàn giao kết quả cuối cùng' },
 ];
 
 const LAYERS = [
-  { id:'apex',   label:'LAYER 0 — APEX AUTHORITY',        badge:'badge-apex',   agentIds:['cto'] },
-  { id:'input',  label:'INPUT LAYER — VALIDATE & SECURE', badge:'badge-input',  agentIds:['intake','security'] },
-  { id:'mgmt',   label:'LAYER 1 — MANAGEMENT',            badge:'badge-mgmt',   agentIds:['manager'] },
-  { id:'coord',  label:'LAYER 2-3 — OVERSIGHT & COORDINATION', badge:'badge-coord', agentIds:['supervisor','planner','lead','audit','loadbalancer','errorrecovery'] },
-  { id:'exec',   label:'LAYER 4 — EXECUTION',             badge:'badge-exec',   agentIds:['researcher','strategist','creator','qc'] },
-  { id:'output', label:'OUTPUT LAYER',                    badge:'badge-output', agentIds:['reporter','comms'] },
+  { id:'apex',   label:'LỚP 0 — QUYỀN LỰC TỐI CAO',            badge:'badge-apex',   agentIds:['cto'] },
+  { id:'input',  label:'LỚP ĐẦU VÀO — XÁC THỰC & BẢO MẬT',     badge:'badge-input',  agentIds:['intake','security'] },
+  { id:'mgmt',   label:'LỚP 1 — QUẢN LÝ',                      badge:'badge-mgmt',   agentIds:['manager'] },
+  { id:'coord',  label:'LỚP 2-3 — GIÁM SÁT & ĐIỀU PHỐI',       badge:'badge-coord', agentIds:['supervisor','planner','lead','audit','loadbalancer','errorrecovery'] },
+  { id:'exec',   label:'LỚP 4 — THỰC THI',                     badge:'badge-exec',   agentIds:['researcher','strategist','creator','qc'] },
+  { id:'output', label:'LỚP ĐẦU RA',                           badge:'badge-output', agentIds:['reporter','comms'] },
 ];
 
 const GRID_CLASS = { 1:'agents-1', 2:'agents-2', 3:'agents-3', 4:'agents-4', 5:'agents-5', 6:'agents-4' };
@@ -184,7 +184,7 @@ function App() {
   const callClaude = async (systemPrompt, userMsg) => {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method:'POST',
-      headers:{ 'Content-Type':'application/json', 'x-api-key': apiKey, 'anthropic-version':'2023-06-01' },
+      headers:{ 'Content-Type':'application/json', 'x-api-key': apiKey, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
       body: JSON.stringify({
         model:'claude-sonnet-4-6',
         max_tokens:1000,
@@ -234,55 +234,59 @@ function App() {
     try {
       // L0 - CTO
       setAgentState('cto','active','',20);
-      log('cto','Khởi động pipeline — xác nhận vision');
+      log('cto','Khởi động pipeline — xác nhận tầm nhìn');
       await sleep(400);
-      setAgentState('cto','done','Pipeline approved ✓',100);
+      setAgentState('cto','done','Pipeline đã được phê duyệt ✓',100);
 
       // L1 Input
-      await run('intake','Bạn là Intake Agent. Validate và classify marketing request. Trả lời ngắn gọn bằng JSON: {valid:true/false, type, priority, route}', ctx);
-      await run('security','Bạn là Security Agent. Check safety và brand compliance. Trả lời ngắn gọn: {safe:true/false, concerns:[]}', ctx);
+      await run('intake','Bạn là Agent Tiếp Nhận. Xác thực và phân loại yêu cầu marketing. Trả lời ngắn gọn bằng JSON: {valid:true/false, type, priority, route}', ctx);
+      await run('security','Bạn là Agent Bảo Mật. Kiểm tra an toàn và tuân thủ thương hiệu. Trả lời ngắn gọn: {safe:true/false, concerns:[]}', ctx);
 
       // L2 Manager
-      const managerPlan = await run('manager', `Bạn là Campaign Manager. Tạo kế hoạch chiến dịch tổng thể cho: ${ctx}. Ngắn gọn, 3-4 bullet points.`, 'Lên kế hoạch campaign');
+      const managerPlan = await run('manager', `Bạn là Agent Quản Lý chiến dịch. Tạo kế hoạch chiến dịch tổng thể cho: ${ctx}. Ngắn gọn, 3-4 bullet points.`, 'Lên kế hoạch campaign');
 
       // L3 Coordination
       setAgentState('supervisor','active','',30);
-      log('supervisor','Phân công team...');
+      log('supervisor','Phân công đội nhóm...');
       await sleep(500);
-      setAgentState('supervisor','done','Team assigned ✓',100);
+      setAgentState('supervisor','done','Đội nhóm đã được phân công ✓',100);
 
-      await run('planner','Bạn là Planner. Lên lịch timeline 4 tuần cho campaign. Ngắn gọn.', `${ctx}\nManager plan: ${managerPlan}`);
-      await run('audit','Bạn là Audit Agent (độc lập). Kiểm tra compliance và risk. Ngắn gọn.', ctx);
+      await run('planner','Bạn là Agent Lập Kế Hoạch. Lên lịch timeline 4 tuần cho campaign. Ngắn gọn.', `${ctx}\nManager plan: ${managerPlan}`);
+      await run('audit','Bạn là Agent Kiểm Toán (độc lập). Kiểm tra tuân thủ và rủi ro. Ngắn gọn.', ctx);
       setAgentState('loadbalancer','active','',50);
-      log('loadbalancer','Phân phối tasks cho Assembly...');
+      log('loadbalancer','Phân phối công việc cho đội thực thi...');
       await sleep(400);
-      setAgentState('loadbalancer','done','Tasks distributed ✓',100);
+      setAgentState('loadbalancer','done','Công việc đã được phân phối ✓',100);
       setAgentState('errorrecovery','active','',50);
-      log('errorrecovery','Cấu hình retry strategy...');
+      log('errorrecovery','Cấu hình chiến lược thử lại...');
       await sleep(300);
-      setAgentState('errorrecovery','done','Recovery ready ✓',100);
+      setAgentState('errorrecovery','done','Cơ chế khôi phục đã sẵn sàng ✓',100);
 
       // L4 Lead
-      const leadBrief = await run('lead', `Bạn là Creative Director. Tạo creative brief cho content team. ${lang==='vi'?'Trả lời tiếng Việt.':'Reply in English.'}`, `${ctx}\nCampaign plan: ${managerPlan}`);
+      const leadBrief = await run('lead', `Bạn là Giám Đốc Sáng Tạo. Tạo creative brief cho đội nội dung. ${lang==='vi'?'Trả lời tiếng Việt.':'Reply in English.'}`, `${ctx}\nCampaign plan: ${managerPlan}`);
 
       // L5 Assembly
-      const research = await run('researcher', `Bạn là Marketing Researcher. Phân tích target audience và market insights. ${lang==='vi'?'Trả lời tiếng Việt.':'Reply in English.'} Ngắn gọn, bullet points.`, `${ctx}\nCreative brief: ${leadBrief}`);
+      const research = await run('researcher', `Bạn là Nhà Nghiên Cứu Marketing. Phân tích khách hàng mục tiêu và insight thị trường. ${lang==='vi'?'Trả lời tiếng Việt.':'Reply in English.'} Ngắn gọn, bullet points.`, `${ctx}\nCreative brief: ${leadBrief}`);
 
-      const strategy = await run('strategist', `Bạn là Marketing Strategist. Tạo chiến lược nội dung ${platform} chi tiết. ${lang==='vi'?'Trả lời tiếng Việt.':'Reply in English.'}`, `${ctx}\nResearch: ${research}\nBrief: ${leadBrief}`);
+      const strategy = await run('strategist', `Bạn là Chiến Lược Gia Marketing. Xây dựng chiến lược nội dung ${platform} chi tiết, trình bày đầy đủ theo 3 giai đoạn phễu (funnel):
+- Đầu phễu (Nhận diện thương hiệu): hiện diện siêu địa phương (nhóm Facebook khu vực, Nextdoor, Patch), tối ưu SEO cho Bing, phân phối review 5 sao trên nhiều kênh (website, tại cửa hàng, quảng cáo).
+- Giữa phễu (Giáo dục & Gắn kết): trang FAQ/Q&A giải đáp thắc mắc trước khi đặt lịch, video hướng dẫn để xây dựng uy tín chuyên môn, chuỗi email nuôi dưỡng khách hàng tiềm năng.
+- Cuối phễu (Chuyển đổi & Trung thành): phục hồi đơn đặt lịch bị bỏ dở (phân tích lý do, follow-up cá nhân hoá), gợi ý upsell dự đoán để tăng giá trị đơn hàng, chương trình giới thiệu khách hàng (referral).
+${lang==='vi'?'Trả lời tiếng Việt.':'Reply in English.'}`, `${ctx}\nResearch: ${research}\nBrief: ${leadBrief}`);
 
-      const content = await run('creator', `Bạn là Content Creator chuyên ${platform}. Tạo 3 posts hoàn chỉnh gồm caption, hashtags, CTA. ${lang==='vi'?'Viết tiếng Việt, sinh động, đúng tone brand.':'Write in English, engaging, on-brand.'}`,
+      const content = await run('creator', `Bạn là Người Sáng Tạo Nội Dung chuyên ${platform}. Tạo 3 posts hoàn chỉnh gồm caption, hashtags, CTA. ${lang==='vi'?'Viết tiếng Việt, sinh động, đúng tone brand.':'Write in English, engaging, on-brand.'}`,
         `${ctx}\nStrategy: ${strategy}\nBrief: ${leadBrief}`);
 
       // QC
-      const qcResult = await run('qc', `Bạn là QC Agent. Review content này theo tiêu chí: brand voice, accuracy, engagement potential, compliance. Chấm điểm /10 và feedback.`, `Content cần review:\n${content}`);
+      const qcResult = await run('qc', `Bạn là Agent QC. Review nội dung này theo tiêu chí: giọng điệu thương hiệu, độ chính xác, khả năng thu hút tương tác, tuân thủ. Chấm điểm /10 và nhận xét.`, `Content cần review:\n${content}`);
 
       // Output Layer
-      const kpi = await run('reporter', `Bạn là Analytics Agent. Đề xuất KPIs và metrics để đo lường hiệu quả campaign. ${lang==='vi'?'Tiếng Việt.':'English.'} Ngắn gọn.`, `${ctx}\nContent: ${content}\nQC: ${qcResult}`);
+      const kpi = await run('reporter', `Bạn là Agent Phân Tích. Đề xuất KPI và chỉ số đo lường hiệu quả campaign theo từng giai đoạn phễu: đầu phễu (reach, impression, tăng review), giữa phễu (CTR trang FAQ, tỷ lệ xem video, tỷ lệ mở email), cuối phễu (tỷ lệ phục hồi đặt lịch bị bỏ dở, giá trị đơn hàng trung bình từ upsell, số lượt giới thiệu). ${lang==='vi'?'Tiếng Việt.':'English.'} Ngắn gọn.`, `${ctx}\nContent: ${content}\nQC: ${qcResult}`);
 
       setAgentState('comms','active','',50);
-      log('comms','Đóng gói output cuối...');
+      log('comms','Đóng gói kết quả cuối cùng...');
       await sleep(500);
-      setAgentState('comms','done','Output delivered ✓',100);
+      setAgentState('comms','done','Kết quả đã được bàn giao ✓',100);
       log('comms','🎉 Pipeline hoàn thành!','success');
 
       setOutputs({ strategy, content, kpi });
@@ -309,28 +313,28 @@ function App() {
           <div className="logo-icon">🚀</div>
           <div>
             <div className="logo-text">Marketing Pipeline AI</div>
-            <div className="logo-sub">16-Agent System v2.0 · Powered by Claude</div>
+            <div className="logo-sub">Hệ Thống 16 Agent v2.0 · Vận hành bởi Claude</div>
           </div>
         </div>
         <div className="header-stats">
-          <div className="stat-pill">Runs: <span>{stats.runs}</span></div>
-          <div className="stat-pill">Agents: <span>16</span></div>
-          <div className="stat-pill">Last: <span>{stats.time}s</span></div>
+          <div className="stat-pill">Lượt chạy: <span>{stats.runs}</span></div>
+          <div className="stat-pill">Agent: <span>16</span></div>
+          <div className="stat-pill">Lần cuối: <span>{stats.time}s</span></div>
         </div>
       </div>
 
       {/* API KEY */}
       <div className="api-section">
-        <div className="api-label">ANTHROPIC API KEY</div>
+        <div className="api-label">KHÓA API ANTHROPIC</div>
         <input className="api-input" type="password" placeholder="sk-ant-api03-..." value={apiKey} onChange={e=>setApiKey(e.target.value)} />
         <button className="btn btn-primary btn-sm" onClick={()=>setKeySet(true)}>
-          {keySet ? '✓ Ready' : 'Set Key'}
+          {keySet ? '✓ Sẵn sàng' : 'Lưu Key'}
         </button>
       </div>
 
       {/* CAMPAIGN INPUT */}
       <div className="campaign-section">
-        <div className="section-title">⚡ Campaign Brief</div>
+        <div className="section-title">⚡ Thông Tin Chiến Dịch</div>
         <div className="input-grid">
           <div className="input-group">
             <div className="input-label">Tên Brand</div>
@@ -394,7 +398,7 @@ function App() {
                       <div className="agent-status">
                         <div className={`status-dot dot-${state}`}></div>
                         <span style={{color: state==='done'?'#34d399': state==='active'?'#a78bfa': state==='error'?'#f87171':'#4b5563'}}>
-                          {state==='idle'?'IDLE': state==='active'?'RUNNING…': state==='done'?'DONE': 'ERROR'}
+                          {state==='idle'?'CHỜ': state==='active'?'ĐANG CHẠY…': state==='done'?'XONG': 'LỖI'}
                         </span>
                       </div>
                       {output && <div className="agent-output">{output}</div>}
@@ -410,9 +414,9 @@ function App() {
 
       {/* ACTIVITY */}
       <div className="activity">
-        <div className="section-title">📡 Activity Stream</div>
+        <div className="section-title">📡 Luồng Hoạt Động</div>
         <div className="activity-list">
-          {activity.length === 0 && <div style={{color:'#374151',fontSize:11,fontFamily:'JetBrains Mono',padding:'8px 0'}}>Chưa có hoạt động — nhấn Run Pipeline để bắt đầu</div>}
+          {activity.length === 0 && <div style={{color:'#374151',fontSize:11,fontFamily:'JetBrains Mono',padding:'8px 0'}}>Chưa có hoạt động — nhấn Chạy Pipeline để bắt đầu</div>}
           {activity.map((a,i) => (
             <div className="activity-item" key={i}>
               <span className="activity-time">{a.time}</span>
@@ -425,23 +429,23 @@ function App() {
 
       {/* OUTPUT */}
       <div className="output-section">
-        <div className="section-title">📦 Output</div>
+        <div className="section-title">📦 Kết Quả</div>
         <div className="output-tabs">
-          {[['content','✍️ Content'],['strategy','🎯 Strategy'],['kpi','📊 KPIs']].map(([k,l])=>(
+          {[['content','✍️ Nội dung'],['strategy','🎯 Chiến lược'],['kpi','📊 KPI']].map(([k,l])=>(
             <button key={k} className={`tab-btn ${activeTab===k?'active':''}`} onClick={()=>setActiveTab(k)}>{l}</button>
           ))}
         </div>
         <div className="output-content">
-          {outputs[activeTab] || <span className="output-placeholder">Output sẽ hiển thị sau khi pipeline hoàn thành...</span>}
+          {outputs[activeTab] || <span className="output-placeholder">Kết quả sẽ hiển thị sau khi pipeline hoàn thành...</span>}
         </div>
       </div>
 
       {/* FOOTER STATS */}
       <div className="footer-stats">
-        <div className="stat-card"><div className="stat-value">{stats.runs}</div><div className="stat-label">Campaigns Ran</div></div>
-        <div className="stat-card"><div className="stat-value">{stats.agents}</div><div className="stat-label">Agents Used</div></div>
-        <div className="stat-card"><div className="stat-value">{stats.tokens}k</div><div className="stat-label">Tokens Est.</div></div>
-        <div className="stat-card"><div className="stat-value">{stats.time}s</div><div className="stat-label">Last Run Time</div></div>
+        <div className="stat-card"><div className="stat-value">{stats.runs}</div><div className="stat-label">Chiến Dịch Đã Chạy</div></div>
+        <div className="stat-card"><div className="stat-value">{stats.agents}</div><div className="stat-label">Agent Đã Dùng</div></div>
+        <div className="stat-card"><div className="stat-value">{stats.tokens}k</div><div className="stat-label">Token Ước Tính</div></div>
+        <div className="stat-card"><div className="stat-value">{stats.time}s</div><div className="stat-label">Thời Gian Chạy Cuối</div></div>
       </div>
     </div>
   );
